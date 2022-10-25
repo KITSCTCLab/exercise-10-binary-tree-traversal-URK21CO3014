@@ -1,54 +1,67 @@
-class Node:
-    def __init__(self, item):
-        self.left = None
-        self.right = None
-        self.val = item
+class BinaryTreeNode:
+    def __init__(self, data):
+        self.data = data
+        self.left_child = None
+        self.right_child = None
 
 
-def inorder(root):
-
-    if root:
-        # Traverse left
-        inorder(root.left)
-        # Traverse root
-        print(str(root.val) + "->", end='')
-        # Traverse right
-        inorder(root.right)
-
-
-def postorder(root):
-
-    if root:
-        # Traverse left
-        postorder(root.left)
-        # Traverse right
-        postorder(root.right)
-        # Traverse root
-        print(str(root.val) + "->", end='')
-
-
-def preorder(root):
-
-    if root:
-        # Traverse root
-        print(str(root.val) + "->", end='')
-        # Traverse left
-        preorder(root.left)
-        # Traverse right
-        preorder(root.right)
+def insert(root, new_value) -> BinaryTreeNode:
+    """If binary search tree is empty, make a new node, declare it as root and return the root.
+        If tree is not empty and if new_value is less than value of data in root, add it to left subtree and proceed recursively.
+        If tree is not empty and if new_value is >= value of data in root, add it to right subtree and proceed recursively.
+        Finally, return the root.
+        """
+    if not root:
+        root = BinaryTreeNode(new_value)
+        return root
+    if new_value < root.data:
+         if root.left_child:
+            insert(root.left_child, new_value)
+         else:
+            root.left_child = BinaryTreeNode(new_value)
+    else:
+        if root.right_child:
+            insert(root.right_child, new_value)
+        else:
+            root.right_child = BinaryTreeNode(new_value)
 
 
-root = Node(1)
-root.left = Node(2)
-root.right = Node(3)
-root.left.left = Node(4)
-root.left.right = Node(5)
+def inorder(root) -> None:
+    if root is None:
+        return
+    inorder(root.left_child)
+    print(root.data, end = " ")
+    inorder(root.right_child)
 
-print("Inorder traversal ")
+
+def preorder(root) -> None:
+    if root is None:
+        return
+    print(root.data, end = " ")
+    preorder(root.left_child)
+    preorder(root.right_child)
+
+
+def postorder(root) -> None:
+    if root is None:
+       return
+    postorder(root.left_child)
+    postorder(root.right_child)
+    print(root.data, end = " ")
+
+
+# Do not change the following code
+input_data = input()
+flag = True
+root = None
+for item in input_data.split(', '):
+    if flag is True:
+        root = insert(None, int(item))
+        flag = False
+    else:
+        insert(root, int(item))
 inorder(root)
-
-print("\nPreorder traversal ")
+print()
 preorder(root)
-
-print("\nPostorder traversal ")
+print()
 postorder(root)
