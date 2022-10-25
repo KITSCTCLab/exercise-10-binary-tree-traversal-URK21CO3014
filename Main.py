@@ -1,43 +1,54 @@
-class BinaryTreeNode:
-    def __init__(self, data):
-        self.data = data
-        self.left_child = None
-        self.right_child = None
+class Node:
+    def __init__(self, item):
+        self.left = None
+        self.right = None
+        self.val = item
 
 
-def insert(root, new_value) -> BinaryTreeNode:
-    """If binary search tree is empty, make a new node, declare it as root and return the root.
-        If tree is not empty and if new_value is less than value of data in root, add it to left subtree and proceed recursively.
-        If tree is not empty and if new_value is >= value of data in root, add it to right subtree and proceed recursively.
-        Finally, return the root.
-        """
-    # Write your code here
+def inorder(root):
+
+    if root:
+        # Traverse left
+        inorder(root.left)
+        # Traverse root
+        print(str(root.val) + "->", end='')
+        # Traverse right
+        inorder(root.right)
 
 
-def inorder(root) -> None:
-    # Write your code here
+def postorder(root):
+
+    if root:
+        # Traverse left
+        postorder(root.left)
+        # Traverse right
+        postorder(root.right)
+        # Traverse root
+        print(str(root.val) + "->", end='')
 
 
-def preorder(root) -> None:
-    # Write your code here
+def preorder(root):
+
+    if root:
+        # Traverse root
+        print(str(root.val) + "->", end='')
+        # Traverse left
+        preorder(root.left)
+        # Traverse right
+        preorder(root.right)
 
 
-def postorder(root) -> None:
-    # Write your code here
+root = Node(1)
+root.left = Node(2)
+root.right = Node(3)
+root.left.left = Node(4)
+root.left.right = Node(5)
 
-
-# Do not change the following code
-input_data = input()
-flag = True
-root = None
-for item in input_data.split(', '):
-    if flag is True:
-        root = insert(None, int(item))
-        flag = False
-    else:
-        insert(root, int(item))
+print("Inorder traversal ")
 inorder(root)
-print()
+
+print("\nPreorder traversal ")
 preorder(root)
-print()
+
+print("\nPostorder traversal ")
 postorder(root)
